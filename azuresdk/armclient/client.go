@@ -10,8 +10,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
-	cache "github.com/patrickmn/go-cache"
-	zap "go.uber.org/zap"
+	"github.com/patrickmn/go-cache"
+	"go.uber.org/zap"
 	"k8s.io/apimachinery/pkg/labels"
 
 	commonAzidentity "github.com/webdevops/go-common/azuresdk/azidentity"
@@ -247,6 +247,11 @@ func (azureClient *ArmClient) UseAzCliAuth() {
 	if err != nil {
 		panic(err)
 	}
+	azureClient.cred = &cred
+}
+
+// UseCredential forces the use of a specific credential for authentication
+func (azureClient *ArmClient) UseCredential(cred azcore.TokenCredential) {
 	azureClient.cred = &cred
 }
 
